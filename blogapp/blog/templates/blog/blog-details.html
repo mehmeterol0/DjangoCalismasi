@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title%} İş İlanı Detayları {% endblock %}
+
+{% block content %}
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-12">
+                
+                <div class="card mb-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <h1 class="card-title h3 mb-3">
+                                    {{ blog.title|title }}
+                                </h1>
+                                <img src="{{ blog.image.url }}" alt="" class="img-fluid" style="float:left; margin-right:20px; margin-bottom: 20px;">
+
+                                <p class="card-text">{{ blog.description|safe }}</p>
+
+                                <!-- is basvurusu yapmak icin gerekli alanları doldurmasını bekliyorum.-->
+                                <form method="POST">
+
+                                    {% if error %}
+                                    <div class="alert alert-danger">
+                                        {{error}}
+                                    </div>
+                                    {% endif %}
+
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">E-mail Adresinizi Giriniz</label>
+                                        <input type="email" class="form-control" id="emailtext" placeholder="isim@ornekmail.com" name="emailtext" value={{emailtext}} >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Ön Yazı Ekleyiniz</label>
+                                        <textarea class="form-control" id="onyazitext"  rows="3" name="onyazitext" value={{onyazitext}}></textarea>
+                                    </div>
+
+                                    </div>
+                                    <div class="mb-2">
+                                    <label for="formFileMultiple" class="form-label">Lütfen CV'nizi Yükleyiniz</label>
+                                    <input class="form-control" type="file" id="cvFile" multiple name="cvFile" value={{cvFile}}>
+                                    </div>
+                                    
+
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-outline-dark" value={{gonder}} id="basvur" onclick="return confirm('Başvurunuz Alınmıştır')" >Gönder</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+ 

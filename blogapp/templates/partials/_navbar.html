@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light"style="background-color: #e3f2fd;">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">İş Arama Portalı</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}"> Ana Sayfa </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blogs' %}"> İş İlanları </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                    <div class="d-flex justify-content-center"> <!-- search bar cok buyuk oluyordu.-->
+                        <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="İş Arayın...">
+                    </div>
+
+                    <li class="nav-item"> <!-- login, logout, hosgeldin backgroundunu degistirme. -->
+                        <a class="nav-link" href="{% url 'logout' %}" style="background-color: #B0E0E6;"> Çıkış Yap </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="" style="background-color: #FFEFD5;">Hoşgeldin, {{ user.get_full_name|title }}</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %} "style="background-color: #B0E0E6;">Giriş Yap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}"style="background-color: #FFEFD5;">Kayıt Ol</a>
+                    </li>
+                {% endif %}
+                
+            </ul>
+
+        </div>
+    </div>
+</nav>
