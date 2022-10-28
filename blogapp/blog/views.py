@@ -1,11 +1,17 @@
 from distutils.log import error
+import email
 from django.http.response import HttpResponse
 from django.shortcuts import render
-from blog.models import Blog, Category
+from matplotlib.style import context
+from blog.models import Blog, Category, Basvurular
 
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+
+
+
+
 
 def index(request):
     context = {
@@ -35,35 +41,12 @@ def blogs_by_category(request, slug):
     }
     return render(request, "blog/blogs.html", context)
 
-def isBasvuru_request(request):
-    if request.user.is_authenticated:
-        return redirect("home")
-
-    if request.method == "POST":
-        emailtext = request.POST["emailtext"]
-        onyazitext = request.POST["onyazitext"]
-        cvFile = request.POST["cvFile"]
-
-        if emailtext == "":
-            if User.objects.filter(emailtext=emailtext).exists():
-                return render(request, "blog-details.html", 
-                {
-                    "error":"E- Mail Boş Bırakılmaz"
-                })
-
-        if onyazitext == "":
-            if User.objects.filter(onyazitext=onyazitext).exists():
-                return render(request, "blog-details.html", 
-                {
-                    "error":"Ön Yazı Boş Bırakılmaz"
-                })
-
-        if cvFile == "":
-            if User.objects.filter(cvFile=cvFile).exists():
-                return render(request, "blog-details.html", 
-                {
-                    "error":"CV'siz Başvuru Yapamazsın."
-                })
-    
-    
-    return redirect("home")
+def is_basvurulari(request):
+    if request.method == 'POST':
+       q = Basvurular(
+           email=request.POST.get("email"), 
+           onyazi=request.POST.get("onyazi"), 
+           cv=request.POST.get("cv"), 
+       )
+       q.save()
+    return render(request,'blog/blogs.html',locals())
